@@ -1,18 +1,9 @@
 # -*- coding:utf-8 -*-
 import pymysql.cursors
+import config
 
 
-# 数据库操作
-config={
-    'host':'127.0.0.1',
-    'port':3306,
-    'user':'root',
-    'password':'qwerty12',
-    'db':'B10',
-    'charset':'utf8',
-    'cursorclass':pymysql.cursors.DictCursor,
-}
-connection = pymysql.connect(**config)
+connection = pymysql.connect(**config.sqlconfig)
 
 
 def login(loginName):

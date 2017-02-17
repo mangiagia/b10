@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import pymysql.cursors
+import config
 
 class show:
     showTime = ""
@@ -10,17 +11,7 @@ class show:
         self.showTime = showTime
 
 
-# 数据库操作
-config={
-    'host':'127.0.0.1',
-    'port':3306,
-    'user':'root',
-    'password':'Qwerty12',
-    'db':'B10',
-    'charset':'utf8',
-    'cursorclass':pymysql.cursors.DictCursor,
-}
-connection = pymysql.connect(**config)
+connection = pymysql.connect(**config.sqlconfig)
 # # 执行sql语句
 
 def insert(performer,showTime):
