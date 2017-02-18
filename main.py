@@ -31,17 +31,29 @@ def login():
 
 
 
-
-
+# 演出新增、修改接口
 @app.route('/show/insert' ,methods=['POST'])
 def showAdd():
     a=request.get_json(silent=False)
     performer=a.get('performer')
     showTime = a.get('showTime')
-    show=showSked.show(performer,showTime)
-    showSked.insert(show.performer,show.showTime)
+    show_id=a.get('show_id')
+    print(show_id)
+    if (show_id==''):
+        showSked.insert(performer,showTime)
+    else:
+        showSked.update(performer,showTime,show_id)
     return make_response('成功')
 
+# 演出删除接口
+@app.route('/show/delete' ,methods=['POST'])
+def showDelete():
+    a=request.get_json(silent=False)
+    show_id = a.get('show_id')
+    showSked.delete(show_id)
+    return make_response('成功')
+
+# 演出查询接口
 @app.route('/show/query' ,methods=['GET'])
 def showQuery():
     show = showSked.select()
@@ -49,7 +61,7 @@ def showQuery():
     jasn_str = json.dumps(date, ensure_ascii=False)
     return make_response(jasn_str)
 
-
+# 志愿者报名接口
 @app.route('/volunteer/insert',methods=['POST'])
 def addVolunteer():
     a=request.get_json(silent=False)
@@ -64,7 +76,7 @@ def addVolunteer():
     volunteer.insert(name,show_id,mobile, volunteer_type, is_food, is_volunteer, remark, created_date)
     return make_response('成功')
 
-
+# 志愿者查询接口
 @app.route('/volunteer/query',methods=['POST'])
 def queryVolunteer():
     a=request.get_json(silent=False)
@@ -75,7 +87,7 @@ def queryVolunteer():
     return make_response(jasn_str)
     # return make_response('jasn_str')
 
-
+# 志愿者更新接口
 @app.route('/volunteer/update',methods=['POST'])
 def updateVolunteer():
     a=request.get_json(silent=False)
@@ -88,9 +100,8 @@ def updateVolunteer():
 
 if __name__ == '__main__':
     # 本地代码
-	# app.wsgi_app = ProxyFix(app.wsgi_app)
-    # app.run()
+    app.run(debug=True)
 
     # ec2代码
-    app.wsgi_app = ProxyFix(app.wsgi_app)
-    app.run(host="172.31.14.125")
+    # app.wsgi_app = ProxyFix(app.wsgi_app)
+    # app.run(host="172.31.14.125")

@@ -2,33 +2,38 @@
 import pymysql.cursors
 import config
 
-class show:
-    showTime = ""
-    performer = ""
-
-    def __init__(self, performer, showTime):
-        self.performer = performer
-        self.showTime = showTime
+# class show:
+#     showTime = ""
+#     performer = ""
+#
+#     def __init__(self, performer, showTime):
+#         self.performer = performer
+#         self.showTime = showTime
 
 
 connection = pymysql.connect(**config.sqlconfig)
 # # 执行sql语句
-
+# 插入演出数据
 def insert(performer,showTime):
-    try:
-        with connection.cursor() as cursor:
+
+    with connection.cursor() as cursor:
             # 执行sql语句，插入记录
-            sql = 'INSERT INTO show_sked (performer, show_time) VALUES (%s, %s)'
-            cursor.execute(sql, (performer,showTime))
+        sql = 'INSERT INTO show_sked (performer, show_time) VALUES (%s, %s)'
+        cursor.execute(sql, (performer,showTime))
             # 没有设置默认自动提交，需要主动提交，以保存所执行的语句
-        connection.commit()
-    finally:
-        connection.close()
+    connection.commit()
+
+# 修改演出数据
+def update(performer,showTime,show_id):
+
+    with connection.cursor() as cursor:
+        sql = 'UPDATE show_sked SET performer=%s,show_time=%s WHERE show_id=%s'
+        cursor.execute(sql, (performer,showTime,show_id))
+    connection.commit()
 
 
-    # 执行sql语句
+# 查询演出列表
 def select():
-
     with connection.cursor() as cursor:
             # 执行sql语句，进行查询
         sql = 'SELECT performer,show_id,show_time FROM show_sked '
@@ -41,15 +46,12 @@ def select():
         print(result)
         # 没有设置默认自动提交，需要主动提交，以保存所执行的语句
     connection.commit()
-
     return result
 
-def update():
-    try:
-        with connection.cursor() as cursor:
-            sql='UPDATE show_sked SET performer=%s WHERE show_id=%s'
-            cursor.execute(sql,('方大同','2'))
-        connection.commit()
-    finally:
-        connection.close()
+# 删除演出信息
+def delete(show_id):
 
+    with connection.cursor() as cursor:
+        sql='DELETE FROM show_sked WHERE show_id=%s'
+        cursor.execute(sql,(show_id))
+    connection.commit()

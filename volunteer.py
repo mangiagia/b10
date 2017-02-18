@@ -15,15 +15,13 @@ connection = pymysql.connect(**config.sqlconfig)
 # # 执行sql语句
 
 def insert(name,show_id,mobile,volunteer_type,is_food,is_volunteer,remark,created_date):
-    try:
-        with connection.cursor() as cursor:
+
+    with connection.cursor() as cursor:
             # 执行sql语句，插入记录
-            sql = 'INSERT INTO volunteer (name,show_id,mobile,volunteer_type,is_food,is_volunteer,remark,created_date) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) '
-            cursor.execute(sql, (name,show_id,mobile,volunteer_type,is_food,is_volunteer,remark,created_date))
+        sql = 'INSERT INTO volunteer (name,show_id,mobile,volunteer_type,is_food,is_volunteer,remark,created_date) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) '
+        cursor.execute(sql, (name,show_id,mobile,volunteer_type,is_food,is_volunteer,remark,created_date))
             # 没有设置默认自动提交，需要主动提交，以保存所执行的语句
-        connection.commit()
-    finally:
-        connection.close()
+    connection.commit()
 
 
 #查询志愿者
