@@ -100,8 +100,8 @@ def updateVolunteer():
 
 if __name__ == '__main__':
     # 本地代码
-    app.run(debug=True)
+    # app.run(debug=True)
 
     # ec2代码
-    # app.wsgi_app = ProxyFix(app.wsgi_app)
-    # app.run(host="172.31.14.125")
+    app.wsgi_app = ProxyFix(app.wsgi_app)
+    app.run(host="172.31.14.125")
