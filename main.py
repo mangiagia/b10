@@ -100,7 +100,7 @@ def updateVolunteer():
 
 if not app.debug:
     import logging
-    fh = logging.FileHandler('//home//ec2-user//b10web')
+    fh = logging.FileHandler('//home//ec2-user//b10web//error.log')
     fh.setLevel(logging.WARNING)
     app.logger.addHandler(fh)
 
