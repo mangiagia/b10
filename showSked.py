@@ -46,6 +46,7 @@ def select():
         print(result)
         # 没有设置默认自动提交，需要主动提交，以保存所执行的语句
     connection.commit()
+    connection.close()
     return result
 
 # 删除演出信息

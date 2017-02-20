@@ -6,6 +6,7 @@ import json,time
 import user
 
 
+
 app = Flask(__name__)
 
 @app.route('/user/login',methods=['POST'])
@@ -97,10 +98,15 @@ def updateVolunteer():
     volunteer.update(id,is_volunteer)
     return make_response('成功')
 
+if not app.debug:
+    import logging
+    fh = logging.FileHandler('//home//ec2-user//b10web')
+    fh.setLevel(logging.WARNING)
+    app.logger.addHandler(fh)
 
 if __name__ == '__main__':
     # 本地代码
-    # app.run(debug=True)
+    # app.run()
 
     # ec2代码
     app.wsgi_app = ProxyFix(app.wsgi_app)
