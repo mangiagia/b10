@@ -4,6 +4,7 @@ import showSked
 import volunteer
 import json,time
 import user
+from threading import Timer
 
 
 
@@ -104,7 +105,18 @@ if not app.debug:
     fh.setLevel(logging.WARNING)
     app.logger.addHandler(fh)
 
+
+def printHello():
+    print ("防止数据库连接断开的定时任务")
+    showSked.select()
+    t=Timer(20000, printHello)
+    t.start()
+
+
+
+
 if __name__ == '__main__':
+    printHello()
     # 本地代码
     # app.run()
 
