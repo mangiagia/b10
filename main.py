@@ -109,7 +109,7 @@ if not app.debug:
 def printHello():
     print ("防止数据库连接断开的定时任务")
     showSked.select()
-    t=Timer(20000, printHello)
+    t=Timer(3600, printHello)
     t.start()
 
 
